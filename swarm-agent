@@ -1,0 +1,7 @@
+JAR=/var/lib/jenkins/swarm-client.jar
+LABELS_FILE=/etc/jenkins/labels
+MASTER="1.2.3.4"
+MASTER_PORT=8080
+USERNAME=jenkins-swarm
+JNK_PWD_FILE=/etc/jenkins/agent-password
+FSROOT="/data/jenkins"
