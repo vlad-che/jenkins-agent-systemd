@@ -1,0 +1,54 @@
+[Unit]
+Description=Jenkins Swarm Agent
+Documentation=https://jenkins.io
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+Restart=on-failure
+TimeoutStopSec=10
+RestartSec=5
+
+User=jenkins
+Group=jenkins
+
+#Environment=NUM_EXECUTORS=
+#Environment=NAME=
+EnvironmentFile=/etc/jenkins/swarm-client
+EnvironmentFile=-/etc/jenkins/swarm-dynamic
+
+WorkingDirectory=/var/lib/jenkins
+
+PermissionsStartOnly=true
+ExecStartPre=/bin/sh -c '/bin/echo "NUM_EXECUTORS=$$(/usr/bin/nproc)" > /etc/jenkins/swarm-dynamic'
+
+#for "-name ${NAME}"
+#ExecStartPre=/bin/sh -c "/bin/echo "NAME=$$(hostname)" >> /etc/jenkins/swarm-dynamic"
+
+# For both variables
+#ExecStartPre=/bin/sh -c '/bin/echo -e "NUM_EXECUTORS=$$(/usr/bin/nproc)\\nNAME=$$(hostname)" > /etc/jenkins/swarm-dynamic'
+
+ExecStart=/usr/bin/java \
+          -jar ${JAR} \
+          -master http://${MASTER}:${MASTER_PORT} \
+          -username ${USERNAME} \
+          -passwordFile  ${JNK_PWD_FILE} \
+          -disableClientsUniqueId \
+          -name %H \
+          -fsroot ${FSROOT} \
+          -labelsFile ${LABELS_FILE} \
+          -executors ${NUM_EXECUTORS}
+
+
+KillSignal=SIGTERM
+KillMode=process
+SendSIGKILL=no
+SuccessExitStatus=143
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=jenkins-swarm
+
+[Install]
+WantedBy=multi-user.target
