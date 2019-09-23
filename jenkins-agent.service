@@ -15,7 +15,7 @@ Group=jenkins
 
 #Environment=NUM_EXECUTORS=
 #Environment=NAME=
-EnvironmentFile=/etc/jenkins/swarm-client
+EnvironmentFile=/etc/jenkins/swarm-agent
 EnvironmentFile=-/etc/jenkins/swarm-dynamic
 
 WorkingDirectory=/var/lib/jenkins
