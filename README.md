@@ -3,9 +3,9 @@ Running Jenkins Swarm Agent as systemd Service
 
 <https://wiki.jenkins.io/display/JENKINS/Swarm+Plugin>
 
-## Add new user "jenkins-swarm" in Jenkins UI and allow this user to create new agents.
+**Add new user "jenkins-swarm" in Jenkins UI and allow this user to create new agents.**
 
-## Create group jenkins and user jenkins on target host
+**Create group jenkins and user jenkins on target host.**
 
 **Add these three files too /etc/jenkins/**
 ```
